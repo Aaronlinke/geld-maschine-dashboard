@@ -1,17 +1,23 @@
-# Geld Maschine - Automatisches Online Einkommen Dashboard
+# Geld Maschine - Full-Stack Application
 
-A sophisticated web application for managing and monitoring automated online income streams in real-time. This dashboard provides comprehensive oversight of various financial metrics and facilitates interaction with different automated bots.
+A sophisticated full-stack web application for managing and monitoring automated online income streams in real-time. This application features a Flask backend with SQLite database and a React frontend, providing comprehensive bot management and dashboard functionality.
 
 ## 🚀 Features
 
-- **Real-time Dashboard**: Live tracking of earnings, profits, and bot performance
-- **Bot Management**: Control and monitor various automated income-generating bots
-- **Interactive Charts**: Visual representation of daily earnings and performance metrics
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Modern UI**: Built with React, Tailwind CSS, and shadcn/ui components
+### Backend Features
+- **RESTful API**: Complete API for bot management, dashboard metrics, and transactions
+- **Database Management**: SQLite database with models for bots, transactions, and metrics
+- **Real-time Data**: Live bot status updates and earnings simulation
+- **CORS Support**: Cross-origin resource sharing for frontend-backend communication
 
-## 🤖 Supported Bot Types
+### Frontend Features
+- **Interactive Dashboard**: Real-time earnings display and bot status monitoring
+- **Bot Management**: Start, pause, and configure various automated bots
+- **Live Charts**: Dynamic earnings visualization with Recharts
+- **Responsive Design**: Optimized for all device sizes
+- **Toast Notifications**: User feedback for all actions
 
+### Supported Bot Types
 - **Crypto Arbitrage Bot**: Automated cryptocurrency trading between exchanges
 - **Forex Trading Bot**: AI-powered foreign exchange trading
 - **Affiliate Marketing Bot**: Automated affiliate campaign management
@@ -21,113 +27,162 @@ A sophisticated web application for managing and monitoring automated online inc
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React 18 with Vite
+### Backend
+- **Framework**: Flask 3.1.1
+- **Database**: SQLite with SQLAlchemy ORM
+- **CORS**: Flask-CORS for cross-origin requests
+- **Python**: 3.11+
+
+### Frontend
+- **Framework**: React 18 with Vite
 - **Styling**: Tailwind CSS with shadcn/ui components
 - **Charts**: Recharts for data visualization
 - **Icons**: Lucide React icons
-- **State Management**: React hooks (useState, useEffect)
-- **Build Tool**: Vite
-- **Package Manager**: pnpm
+- **Notifications**: Sonner for toast messages
 
-## 📦 Installation
+## 📦 Installation & Setup
 
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- Git
+
+### Backend Setup
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd geld-maschine-frontend
+   git clone https://github.com/Aaronlinke/geld-maschine-fullstack.git
+   cd geld-maschine-fullstack
    ```
 
-2. Install dependencies:
+2. Create and activate virtual environment:
    ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Initialize the database:
+   ```bash
+   python src/seed_data.py
+   ```
+
+5. Start the Flask server:
+   ```bash
+   python src/main.py
+   ```
+
+The application will be available at `http://localhost:5000`
+
+### Development Mode (Separate Frontend)
+
+If you want to run the frontend separately for development:
+
+1. Navigate to the frontend directory and install dependencies:
+   ```bash
+   cd ../geld-maschine-frontend
    pnpm install
    ```
 
-3. Start the development server:
+2. Start the development server:
    ```bash
    pnpm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+The frontend will be available at `http://localhost:5173`
 
 ## 🚀 Deployment
 
 ### Vercel Deployment
 
-This project is optimized for deployment on Vercel:
+This application is configured for easy deployment on Vercel:
 
-1. Push your code to a GitHub repository
+1. Push your code to GitHub
 2. Connect your repository to Vercel
-3. Vercel will automatically detect the Vite configuration and deploy
+3. Vercel will automatically detect the Flask application and deploy it
 
-### Manual Build
+### Manual Deployment
 
-To build for production:
+For other platforms:
 
-```bash
-pnpm run build
-```
-
-The built files will be in the `dist` directory.
+1. Ensure all dependencies are in `requirements.txt`
+2. Set the Flask app entry point to `src/main.py`
+3. Configure environment variables as needed
 
 ## 📁 Project Structure
 
 ```
-src/
-├── components/
-│   └── ui/          # shadcn/ui components
-├── assets/          # Static assets
-├── App.jsx          # Main application component
-├── App.css          # Application styles
-├── main.jsx         # Application entry point
-└── index.css        # Global styles
+├── src/
+│   ├── models/
+│   │   ├── user.py          # User model and database setup
+│   │   └── bot.py           # Bot, Transaction, and Metrics models
+│   ├── routes/
+│   │   ├── user.py          # User-related API routes
+│   │   └── bot.py           # Bot management API routes
+│   ├── static/              # Built frontend files
+│   ├── database/
+│   │   └── app.db           # SQLite database
+│   ├── main.py              # Flask application entry point
+│   └── seed_data.py         # Database seeding script
+├── requirements.txt         # Python dependencies
+└── README.md
 ```
 
-## 🎨 Customization
+## 🔧 API Endpoints
 
-The application uses Tailwind CSS for styling. You can customize:
+### Bot Management
+- `GET /api/bots` - Get all bots
+- `GET /api/bots/{id}` - Get specific bot
+- `POST /api/bots` - Create new bot
+- `POST /api/bots/{id}/action` - Perform bot action (start/pause/stop)
+- `PUT /api/bots/{id}/settings` - Update bot settings
 
-- **Colors**: Modify the color scheme in `App.css`
-- **Components**: Add new shadcn/ui components as needed
-- **Layout**: Adjust the grid layouts and responsive breakpoints
-- **Charts**: Customize chart appearance and data in the Recharts components
+### Dashboard
+- `GET /api/dashboard/metrics` - Get dashboard metrics
+- `GET /api/dashboard/earnings-chart` - Get earnings chart data
 
-## 🔧 Development
+### Transactions
+- `GET /api/transactions` - Get all transactions
+- `POST /api/payout` - Request payout
 
-### Available Scripts
+### Simulation
+- `POST /api/simulate-earnings` - Simulate bot earnings (demo feature)
 
-- `pnpm run dev` - Start development server
-- `pnpm run build` - Build for production
-- `pnpm run preview` - Preview production build
-- `pnpm run lint` - Run ESLint
+## 🎮 Usage
 
-### Adding New Features
+1. **Dashboard Overview**: View real-time earnings, active bots, success rate, and ROI
+2. **Bot Management**: Start, pause, or configure individual bots
+3. **Earnings Simulation**: Use the "Einnahmen simulieren" button to simulate bot earnings
+4. **Payout Requests**: Request payouts using the "Auszahlung anfordern" button
+5. **Real-time Updates**: All changes are reflected immediately in the dashboard
 
-1. **New Bot Types**: Add bot configurations to the `botData` array in `App.jsx`
-2. **Additional Metrics**: Extend the metrics cards section
-3. **New Charts**: Use Recharts components for additional visualizations
-4. **API Integration**: Replace mock data with real API calls
+## 🔒 Security Notes
 
-## 🌟 Future Enhancements
+- This is a demonstration application with simulated data
+- In production, implement proper authentication and authorization
+- Use environment variables for sensitive configuration
+- Implement rate limiting and input validation
+- Use HTTPS in production
 
-- Backend API integration for real-time data
-- User authentication and authorization
-- Advanced analytics and reporting
-- Mobile app development
-- Multi-language support
-- Dark/light theme toggle
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📞 Support
+## 🆘 Support
 
 For support and questions, please open an issue in the GitHub repository.
 
 ---
 
-**Note**: This is currently a frontend demonstration. For a fully functional application, backend services and API integrations are required as outlined in the project documentation.
+**Note**: This application uses simulated data for demonstration purposes. For a production environment, integrate with real financial APIs and implement proper security measures.
